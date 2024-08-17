@@ -1,0 +1,44 @@
+*Ask
+Guiding questions:
+1.- What is the problem you are trying to solve?
+R. I would say that the problem to be solve is the the trends in smart devices usages that could increase
+   the user base of the bellabeat's products.
+2.- How can your insights drive bussiness decisions?
+R. My insights could affect how the marketing campings target the public or the development of new features
+   in bellabeat's products.
+
+STATEMENT:
+Analyze smart device usage of non-bellabeat smart devices to discover insights and trends of it's usage to
+help improve the marketing campaings and/or suggest the development of new features for the bellabeat products
+to improve the experience of it's customer base.
+
+*Prepare
+Is suggested to use the FitBit Fitness Tracker Data (CC0: Public Domain, dataset made available through Mobius): This Kaggle data set
+contains personal fitness tracker from thirty fitbit users. Thirty eligible Fitbit users consented to the submission of
+personal tracker data, including minute-level output for physical activity, heart rate, and sleep monitoring. It includes
+information about daily activity, steps, and heart rate that can be used to explore users’ habits.
+--Is adviced that the data has some limitations.--
+Guiding questions:
+1.-Where is your data stored?
+R.-The data is stored in various csv files, the data will be stored inside the projects folder for its analysis
+2.-How is the data organized? Is it in long or wide format?
+R.-Most of the data is in long format, only the summaries are in wide format, also the users are represented by their ID
+3.-Are there issues with bias or credibility in this data?
+R.-After the first look up it has been obvious that the data has some minor issues mostly on the dates type and format, summaries
+   have only the short dates while the specifics have long date formats unified in one field, it seems that bias won't be a problem
+   because the gender is not specified, since the analysis wasn't asked to be performed only to women but to consumers in general
+   instead it's seems ok but has a probability to have a misrepresentation bias, but will raise this question in the next meeting, 
+   and as for credibility it seems as a reliable source since it's already said that this data was carefully collected.
+4.-How are you addressing licensing, privacy, security, and accessibility?
+R.-In the description of the dataset it's said that the data is of public domain and has the consent of all the participants that 
+   provided the data.
+5.-How did you verify the data’s integrity?
+R.-The first checkup was done using Microsoft Excel to search for Null values, wrong data types and other common mistakes, later on
+   there will be a second cleanning using R code to ensure it's integrity.
+6.-How does it help you answer your question?
+R.-This dataset gives a general idea of some customers habits and daily activities wich are usefull to better understand the sentiment
+   of the market.
+7.-Are there any problems with the data?
+R.-Maybe the main issue is that in the data is not tell which participants are females, this raises again the concern for a misrepresentation
+   Bias as maybe both genders are not equally represented in this dataset, and for a women focused company this is dangerous therefore
+   I agree on the recommendation to include more data, at least one that clearly label gender for cross-examination, will update in this matter.
