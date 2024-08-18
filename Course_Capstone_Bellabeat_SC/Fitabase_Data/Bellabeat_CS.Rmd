@@ -1,0 +1,47 @@
+---
+title: "Bellabeat_CS"
+author: "Diego Barón"
+date: "2024-08-18"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## First load the necessary libraries
+```{r Loading libraries}
+library("tidyverse")
+library("ggplot2")
+library("skimr")
+library("janitor")
+library("dplyr")
+library("here")
+```
+## Now the import of the datasets
+For my case of study I decided to focus on the Time watch which tracks activity, sleep and stress, is worth to make clear that according to some studies from medical papers the stress can be measure by the heart rate, that's not the only factor that contributes to the stress but is a critical point to detect it and that's why I will be using the Activity data set, the sleep data set and the hearth rate data set.
+```{r loading datasets}
+activity <- read_csv("dailyActivity_merged.csv")
+sleep <- read_csv("minuteSleep_merged.csv")
+stress <- read_csv("heartrate_seconds_merged.csv")
+```
+## Preparation of the data sets
+First lets see how is organized the data sets:
+```{r View data sets}
+View(activity)
+View(sleep)
+View(stress)
+```
+The first thing to notice is that the date in all data sets are in MM/DD/YYYY format also they are not recognized as dates but character type of data and on the sleep and stress data sets the date is long date meaning it also have a time stamp, this last observation is not bad but it could be more use full if the date and time stamp where on individual columns, so lets start by formatting our data.
+### Data formatting
+```{r cars}
+summary(cars)
+```
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
