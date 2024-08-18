@@ -25,17 +25,28 @@ sleep <- read_csv("minuteSleep_merged.csv")
 stress <- read_csv("heartrate_seconds_merged.csv")
 ```
 ## Preparation of the data sets
-First lets see how is organized the data sets:
-```{r View data sets}
-View(activity)
-View(sleep)
-View(stress)
+First lets see some statics of our data sets:
+```{r Summary of the data}
+summary(activity)
+summary(sleep)
+summary(stress)
 ```
-The first thing to notice is that the date in all data sets are in MM/DD/YYYY format also they are not recognized as dates but character type of data and on the sleep and stress data sets the date is long date meaning it also have a time stamp, this last observation is not bad but it could be more use full if the date and time stamp where on individual columns, so lets start by formatting our data.
-### Data formatting
-```{r cars}
-summary(cars)
+The first thing to notice is that the date in all data sets are in MM/DD/YYYY format also they are not recognized as dates but character type of data and on the sleep and stress data sets the date is long date meaning it also have a time stamp, so lets start by formatting our data.
+### More data statics
+Now lets check the data sets for unique participants
+```{r Counting unique users}
+n_distinct(activity$Id)
+n_distinct(sleep$Id)
+n_distinct(stress$Id)
 ```
+With this new set of statics we can see that:
+
+* The Activity data set have 35 participants
+* The Sleep data set have 23 participants
+* The Stress data set have 14 participants
+
+## Data Formatting
+
 ## Including Plots
 
 You can also embed plots, for example:
