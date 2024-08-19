@@ -46,6 +46,21 @@ With this new set of statics we can see that:
 * The Stress data set have 14 participants
 
 ## Data Formatting
+Now with this first statics let's start with the formatting of the date field in every data set:
+```{r Formatting dates}
+activity$ActivityDate=as.POSIXct(activity$ActivityDate, format="%m/%d/%Y", tz=Sys.timezone())
+sleep$date=as.POSIXct(sleep$date, format="%m/%d/%Y %I:%M:%S", tz="")
+sleep$time <- format(sleep$date, format = "%H:%M:%S")
+sleep$ShortDate <- format(sleep$date, format = "%m/%d/%y")
+stress$Time=as.POSIXct(stress$Time, format="%m/%d/%Y %I:%M:%S", tz="")
+stress$hour <- format(stress$Time, format = "%H:%M:%S")
+stress$ShortDate <- format(stress$Time, format = "%m/%d/%y")
+#summarise(group_by(sleep,sleep$Id), sum(sleep$hour))
+#sleep$date <- format(sleep$SleepDate, format = "%m/%d/%y")
+```
+With this I completed the formatting of the dates as well to include an extra separate column in sleep and stress data set for the time and date, this is important later on for analysis purposes.
+
+## More statistics
 
 ## Including Plots
 
