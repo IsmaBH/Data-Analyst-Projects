@@ -50,18 +50,37 @@ Now with this first statics let's start with the formatting of the date field in
 ```{r Formatting dates}
 activity$ActivityDate=as.POSIXct(activity$ActivityDate, format="%m/%d/%Y", tz=Sys.timezone())
 sleep$date=as.POSIXct(sleep$date, format="%m/%d/%Y %I:%M:%S", tz="")
-sleep$time <- format(sleep$date, format = "%H:%M:%S")
-sleep$ShortDate <- format(sleep$date, format = "%m/%d/%y")
 stress$Time=as.POSIXct(stress$Time, format="%m/%d/%Y %I:%M:%S", tz="")
-stress$hour <- format(stress$Time, format = "%H:%M:%S")
-stress$ShortDate <- format(stress$Time, format = "%m/%d/%y")
-#summarise(group_by(sleep,sleep$Id), sum(sleep$hour))
-#sleep$date <- format(sleep$SleepDate, format = "%m/%d/%y")
 ```
 With this I completed the formatting of the dates as well to include an extra separate column in sleep and stress data set for the time and date, this is important later on for analysis purposes.
 
 ## More statistics
+Now lets make some summaries for data in each data set:
 
+### Activity data set
+```{r Activity summary A}
+activity %>% 
+  select(TotalSteps,TotalDistance,SedentaryMinutes,Calories) %>% summary()
+```
+```{r Activity summary B}
+activity %>% 
+  select(VeryActiveMinutes,FairlyActiveMinutes,LightlyActiveMinutes) %>% summary()
+```
+This first selective summaries show us some insights:
+
+*The mean total steps are 6547
+*The mean total distance traveled is 4.664 miles
+*The mean sedentary time in minutes are 995.3 mins (16.58 hrs aprox.)
+*The mean of very active (intense) activity minutes is 16.62 mins
+*The mean of fairly active activity is 13.07 mins
+*The mean of light activity in minutes is 170.1 mins (2.8 hrs aprox.)
+*This means that most of the steps and distance traveled is during light activity
+
+### Sleep data set
+```{r Sleep summary A}
+sleep %>% group_by(Id) %>% summarise(totalMinutes = sum(value))
+unique(as.Date(sleep$date))
+```
 ## Including Plots
 
 You can also embed plots, for example:

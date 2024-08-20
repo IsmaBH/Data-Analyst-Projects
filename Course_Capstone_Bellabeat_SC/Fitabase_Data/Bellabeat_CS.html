@@ -488,13 +488,42 @@ participants</p>
 <pre><code>## [1] 14</code></pre>
 <p>With this new set of statics we can see that:</p>
 <ul>
-<li>The Activity data set have 35 participants list</li>
+<li>The Activity data set have 35 participants</li>
 <li>The Sleep data set have 23 participants</li>
 <li>The Stress data set have 14 participants</li>
 </ul>
 </div>
 <div id="data-formatting" class="section level2">
 <h2>Data Formatting</h2>
+<p>Now with this first statics let’s start with the formatting of the
+date field in every data set:</p>
+<pre class="r"><code>activity$ActivityDate=as.POSIXct(activity$ActivityDate, format=&quot;%m/%d/%Y&quot;, tz=Sys.timezone())
+sleep$date=as.POSIXct(sleep$date, format=&quot;%m/%d/%Y %I:%M:%S&quot;, tz=&quot;&quot;)
+sleep$time &lt;- format(sleep$date, format = &quot;%H:%M:%S&quot;)
+sleep$ShortDate &lt;- format(sleep$date, format = &quot;%m/%d/%y&quot;)
+stress$Time=as.POSIXct(stress$Time, format=&quot;%m/%d/%Y %I:%M:%S&quot;, tz=&quot;&quot;)
+stress$hour &lt;- format(stress$Time, format = &quot;%H:%M:%S&quot;)
+stress$ShortDate &lt;- format(stress$Time, format = &quot;%m/%d/%y&quot;)
+#summarise(group_by(sleep,sleep$Id), sum(sleep$hour))</code></pre>
+<p>With this I completed the formatting of the dates as well to include
+an extra separate column in sleep and stress data set for the time and
+date, this is important later on for analysis purposes.</p>
+</div>
+<div id="more-statistics" class="section level2">
+<h2>More statistics</h2>
+<p>Now lets make some summaries for data in each data set:</p>
+<div id="activity-data-set" class="section level3">
+<h3>Activity data set</h3>
+<pre class="r"><code>activity %&gt;% 
+  select(TotalSteps,TotalDistance,SedentaryMinutes,Calories) %&gt;% summary()</code></pre>
+<pre><code>##    TotalSteps    TotalDistance    SedentaryMinutes    Calories   
+##  Min.   :    0   Min.   : 0.000   Min.   :  32.0   Min.   :   0  
+##  1st Qu.: 1988   1st Qu.: 1.410   1st Qu.: 728.0   1st Qu.:1776  
+##  Median : 5986   Median : 4.090   Median :1057.0   Median :2062  
+##  Mean   : 6547   Mean   : 4.664   Mean   : 995.3   Mean   :2189  
+##  3rd Qu.:10198   3rd Qu.: 7.160   3rd Qu.:1285.0   3rd Qu.:2667  
+##  Max.   :28497   Max.   :27.530   Max.   :1440.0   Max.   :4562</code></pre>
+</div>
 </div>
 <div id="including-plots" class="section level2">
 <h2>Including Plots</h2>
