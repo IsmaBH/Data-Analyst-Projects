@@ -115,11 +115,11 @@ Further I will combine the data sets in order prove two hypothesis:
 ## Activity and Stress Merge
 ```{r Merging Activity and stress data sets}
 activityMerged <- merge(stressDF,activity, by = c('Id'))
-head(mergedData)
+head(activityMerged)
 ```
 
 ## Sleep and Stress Merge
-```{r Merging Activity and stress data sets}
+```{r Merging Sleep and Stress data sets}
 mergedData <- merge(stressDF,sleepDF, by = c('Id'))
 head(mergedData)
 ```
@@ -131,12 +131,15 @@ With the merged data lets create a visualization
 ggplot(data=activity, aes(x = TotalSteps, y = Calories)) +
   geom_point(color = "purple") + geom_smooth() + labs(title = "Total steps vs calories")
 ```
+
 As we can se from this graph the calories burned are not always related to steps done, as we can see the calories burned
 tend to concentrate between 0 to 10,000 steps.
+
 ```{r Heart rate vs Active minutes, echo=FALSE}
 ggplot(data=activityMerged, aes(x = VeryActiveMinutes, y = averageHeartRateDay)) +
   geom_point() + labs(title = "Active minutes vs Heart rate")
 ```
+
 On the first hypothesis we can see that the data supports it, in the graph is shown that an elevated heart rate is ocurring
 in the range of 0 to 100 minutes of high activity.
 
@@ -144,7 +147,13 @@ in the range of 0 to 100 minutes of high activity.
 ggplot(data=mergedData, aes(x = bedTimeDay, y = averageHeartRateDay)) +
   geom_point() + labs(title = "Heart rate vs Bed time")
 ```
+
 Unfortunately the second hypothesis is inconclusive due to the lack of data, there is so little cases of study to detect
 a trend or pattern.
 
-## Conclusion
+## Key takeaways
+First of all there is a need for more data on the sleep and heart rate data sets to make better and meaningful insights
+at least the same amount of data that the activity data set has, now with the data provided we can tell that the calories
+burned are related to the steps or intense activity done by the person also we have seen that the heart rate and active exercising are related, sadly there wasn't enough data to prove the hypothesis about the heart rate and the bed time but I am confident that with more data this could be proven true.
+
+Now for the product I selected the *Time* watch, seeing the lack of sleep data I would recommend to conduct a survey about the design and comfort wearing the device because maybe the reason is that people in general does not feel comfortable gearing traditional design watches to sleep causing to put them away to sleep, also I would recommend to look into the sensors, their sensitivity, accuracy, isolation to prevent water or sweat to damage the sensors.
