@@ -50,7 +50,9 @@ Now with this first statics let's start with the formatting of the date field in
 ```{r Formatting dates}
 activity$ActivityDate=as.POSIXct(activity$ActivityDate, format="%m/%d/%Y", tz=Sys.timezone())
 sleep$date=as.POSIXct(sleep$date, format="%m/%d/%Y %I:%M:%S", tz="")
+sleep$shortDate <- format(sleep$date, format = "%m/%d/%y")
 stress$Time=as.POSIXct(stress$Time, format="%m/%d/%Y %I:%M:%S", tz="")
+stress$shortDate <- format(stress$Time, format = "%m/%d/%y")
 ```
 With this I completed the formatting of the dates as well to include an extra separate column in sleep and stress data set for the time and date, this is important later on for analysis purposes.
 
@@ -78,15 +80,71 @@ This first selective summaries show us some insights:
 
 ### Sleep data set
 ```{r Sleep summary A}
-sleep %>% group_by(Id) %>% summarise(totalMinutes = sum(value))
-unique(as.Date(sleep$date))
+sleepDF <- sleep %>% 
+  group_by(Id) %>% 
+  summarize(totalMinutes = sum(value),
+            averageHours = totalMinutes/60 ,
+            MeasuredDays = n_distinct(shortDate),
+            bedTimeDay = averageHours/MeasuredDays)
 ```
-## Including Plots
+This filter let us see some more insights of the sleep data such as:
 
-You can also embed plots, for example:
+*Not all participants used the sleep function the same amount of days
+*There is a high chance that the data was not collected equally due to technical fails
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+Further I will return to this summary to get other insights such as *average bed time per day*, *average days of usage*
+and *average hours slept*, for now lets see a similar summary but for the heart rate data set.
+
+### Heart rate (Stress) data set
+```{r Stress summary A}
+stressDF <- stress %>% 
+  group_by(Id) %>% 
+  summarize(MeasuredDays = n_distinct(shortDate), averageHeartRateDay = sum(Value)/MeasuredDays)
+```
+With this we can extract the next insights:
+
+*The American Heart Association have a definition of normal heart rate for adults in 60 - 100 BPM (Beats Per Minute)
+*Which means that a normal heart rate per day should be around 86,400 - 144000 BPMs per day
+*The results above suggest that most of the participants in the heart rate data set where under some kind of extreme stress, i.e physical exercise or stressful situations that accelerate their heart rate.
+
+Further I will combine the data sets in order prove two hypothesis:
+
+*The increase in the heart rate is due to high activity levels
+*The most of the participants of the heart rate data set also have the most sleep hours
+
+## Activity and Stress Merge
+```{r Merging Activity and stress data sets}
+activityMerged <- merge(stressDF,activity, by = c('Id'))
+head(mergedData)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+## Sleep and Stress Merge
+```{r Merging Activity and stress data sets}
+mergedData <- merge(stressDF,sleepDF, by = c('Id'))
+head(mergedData)
+```
+## Making visualitation
+
+With the merged data lets create a visualization
+
+```{r calories vs steps, echo=FALSE}
+ggplot(data=activity, aes(x = TotalSteps, y = Calories)) +
+  geom_point(color = "purple") + geom_smooth() + labs(title = "Total steps vs calories")
+```
+As we can se from this graph the calories burned are not always related to steps done, as we can see the calories burned
+tend to concentrate between 0 to 10,000 steps.
+```{r Heart rate vs Active minutes, echo=FALSE}
+ggplot(data=activityMerged, aes(x = VeryActiveMinutes, y = averageHeartRateDay)) +
+  geom_point() + labs(title = "Active minutes vs Heart rate")
+```
+On the first hypothesis we can see that the data supports it, in the graph is shown that an elevated heart rate is ocurring
+in the range of 0 to 100 minutes of high activity.
+
+```{r Heart rate vs Bed time, echo=FALSE}
+ggplot(data=mergedData, aes(x = bedTimeDay, y = averageHeartRateDay)) +
+  geom_point() + labs(title = "Heart rate vs Bed time")
+```
+Unfortunately the second hypothesis is inconclusive due to the lack of data, there is so little cases of study to detect
+a trend or pattern.
+
+## Conclusion
